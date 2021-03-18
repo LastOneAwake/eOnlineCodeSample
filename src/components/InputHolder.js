@@ -3,16 +3,21 @@ import React, {useState} from 'react';
 export default function InputHolder({fetchWeatherData, validZip}) {
     const [inputValue, updateInputValue] = useState('');
 
+    function onSubmit(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!inputValue.length) {
+            return;
+        }
+        fetchWeatherData(inputValue)
+    }
+
     return (
-        <div id={'inputHolder'} className={'centeredChildren'} >
+        <div id={'inputHolder'} className={'centeredChildren'}>
             <form
                 className={'flexColumn centeredChildren'}
-                onSubmit={e => {
-                    //handling for enter press
-                    e.preventDefault();
-                    e.stopPropagation();
-                    fetchWeatherData(inputValue)
-                }}>
+                onSubmit={e => onSubmit(e)}
+            >
                 <div id={'inputs'}>
                     <input
                         placeholder={'Zip Code'}
@@ -21,24 +26,20 @@ export default function InputHolder({fetchWeatherData, validZip}) {
                         type={'text'}
                         value={inputValue}
                         onChange={e => {
-                            if (e.target.value.length > 5) {
-                                return;
-                            }
-                            let val = parseInt(e.target.value);
+                            let val = e.target.value;
                             if (val.length > 5) {
                                 return
                             }
-                            !isNaN(val) ? updateInputValue(val) : (val.length ? updateInputValue(inputValue) : updateInputValue(''));
+                            if (!isNaN(val)) {
+                                updateInputValue(val)
+                            } else if (!val.length) {
+                                updateInputValue('')
+                            }
 
                         }}
                     />
                     <button
-                        onClick={(e) => {
-                            //handling for enter press, as this will fire on the form's onSubmit function
-                            e.preventDefault();
-                            e.stopPropagation();
-                            fetchWeatherData(inputValue)
-                        }}
+                        onClick={e => onSubmit(e)}
                     >
                         Update
                     </button>
