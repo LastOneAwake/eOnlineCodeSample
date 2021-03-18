@@ -6,7 +6,7 @@ import Temperatures from './components/Temperatures'
 
 
 function App() {
-    const [validZip, updateValidZip] = useState(true);
+    const [validZip, updateValidZip] = useState(false);
     const [weatherData, updateWeatherData] = useState({});
     function fetchWeatherData(inputValue) {
         fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + inputValue + '&units=imperial&appid=4f8fd3bf8b9dfe9bfb6125a43f44c012')
@@ -15,17 +15,14 @@ function App() {
                 if (data.cod && data.cod === '404') {
                     updateValidZip(false);
                 } else {
-                    updateValidZip(true);
                     updateWeatherData(data);
+                    updateValidZip(true);
                 }
             })
         ;
     }
-
-    let topText = 'Please Enter a zip code', weatherDescription = '\u00A0', currentTempInt = '', highTempInt = '', lowTempInt = '';
-    //I opted to use the name key as my check for valid data, simply because if that value exists then all the others will be there as well
-    let validData = !!weatherData.name;
-    if (validData) {
+    let topText = 'Please Enter a for-realsies zip code', weatherDescription = '\u00A0', currentTempInt = '', highTempInt = '', lowTempInt = '';
+    if (validZip) {
         [topText, weatherDescription, lowTempInt, currentTempInt, highTempInt] = [weatherData.name, weatherData.weather[0].description, parseInt(weatherData.main.temp_min), parseInt(weatherData.main.temp), parseInt(weatherData.main.temp_max), ];
     }
     return (
@@ -40,7 +37,7 @@ function App() {
                 lowTemp={lowTempInt}
                 currentTemp={currentTempInt}
                 highTemp={highTempInt}
-                validData={validData}
+                validData={validZip}
             />
         </div>
     );
