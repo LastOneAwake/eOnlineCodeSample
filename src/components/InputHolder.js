@@ -3,7 +3,7 @@ import React, {useState, useRef, useEffect} from 'react';
 /**
  *
  */
-export default function InputHolder({fetchWeatherData, validZip}) {
+export default function InputHolder({fetchWeatherData, verifiedZip}) {
     const [inputValue, updateInputValue] = useState('');
     const inputRef = useRef(null);
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function InputHolder({fetchWeatherData, validZip}) {
         e.preventDefault();
         e.stopPropagation();
         if (inputValue.length < 5) {
-            // We would generally wait for the API to validate the zip code, but if it's less than 5 digits long we know off the bat that it's not a valid zip.
+            // We would generally wait for the API to validate the zip code, but if it's less than 5 digits long we know off the bat that it's not a valid zip, so we don't bother sending it.
             return;
         }
         fetchWeatherData(inputValue)
@@ -29,7 +29,7 @@ export default function InputHolder({fetchWeatherData, validZip}) {
                 <div id={'inputs'}>
                     <input
                         placeholder={'Zip Code'}
-                        className={validZip ? '' : 'invalid'}
+                        className={!verifiedZip ? 'invalid' : ''}
                         name={'zipInput'}
                         type={'text'}
                         value={inputValue}
@@ -50,11 +50,7 @@ export default function InputHolder({fetchWeatherData, validZip}) {
 
                         }}
                     />
-                    <button
-                        onClick={e => onSubmit(e)}
-                    >
-                        Update
-                    </button>
+                    <button onClick={e => onSubmit(e)}>Update</button>
                 </div>
             </form>
         </div>

@@ -1,18 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Roboto:wght@300&display=swap');
-
-
-@keyframes bgCycle {
-  0% {
-    background-position: 0 100%;
-  }
-  50% {
-    background-position: 100% 25%;
-  }
-  100% {
-    background-position: 0 100%;
-  }
-}
-
 $darkText: #4A4A4A;
 $lightText: #dcdcdc;
 $lightBorderColor: rgba(255, 255, 255, 0.56);
@@ -69,6 +55,11 @@ $lightBorderColor: rgba(255, 255, 255, 0.56);
     color: $lightText;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
+    #forRealsies{
+      &.invalid{
+        animation: softRedTextFlash 2s;
+      }
+    }
   }
 
   #desc {
@@ -177,6 +168,7 @@ $lightBorderColor: rgba(255, 255, 255, 0.56);
 
           &.invalid {
             color: #902424;
+            animation: invalidJiggle .25s;
           }
         }
 
@@ -200,4 +192,47 @@ $lightBorderColor: rgba(255, 255, 255, 0.56);
       }
     }
   }
+}
+
+
+@keyframes bgCycle {
+  0% {
+    background-position: 0 100%;
+  }
+  50% {
+    background-position: 100% 25%;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+@keyframes softRedTextFlash {
+  0% {
+    color: $lightText;
+  }
+  50% {
+    color: #d24747;
+  }
+  100% {
+    color: $lightText;
+  }
+}
+
+@keyframes invalidJiggle {
+  0% {
+    transform: translateX(-3px);
+  }
+  25% {
+    transform: translateX(3px);
+  }
+  50% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+
 }
