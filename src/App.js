@@ -27,22 +27,27 @@ function App() {
             });
     }
 
-    //locally used text variables, using \u00A0 for &nbsp; so as to take up the space w/out having to fill it with something.
-    let topText = 'Please Enter a for-realsies zip code', weatherDescription = '\u00A0';
-    //temp vals passed to the Temperatures component
-    let currentTempInt = null, highTempInt = null, lowTempInt = null;
-    //a verified zip is our validator, this is because the api will let us know if the zip is verified and if so we'll have all the data available
+    // I'm using \u00A0 for &nbsp; so as to take up the space w/out having to fill it with something.
+    let weatherDescription = '\u00A0';
+    //temperature vals passed to the Temperatures component.
+    let currentTempInt = null, highTempInt = null, lowTempInt = null, iconURL = null;
     if (validData) {
-        [topText, weatherDescription, lowTempInt, currentTempInt, highTempInt] = [weatherData.name, weatherData.weather[0].description, parseInt(weatherData.main.temp_min), parseInt(weatherData.main.temp), parseInt(weatherData.main.temp_max),];
+        [weatherDescription, lowTempInt, currentTempInt, highTempInt] = [weatherData.weather[0].description, parseInt(weatherData.main.temp_min), parseInt(weatherData.main.temp), parseInt(weatherData.main.temp_max),];
+        console.log(weatherData.weather[0].icon);
+        iconURL = 'http://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png';
     }
     return (
         <div id={'weatherApp'}>
+            <div id={'weatherHeader'} className={'flexColumn centeredChildren'}>
+                <div>Weather {iconURL && <img src={iconURL} alt={'icon displaying ' + weatherDescription}/>} </div>
+                <div id={'headerSubtitle'}>no matter the weather we'll weather together {'<3'}</div>
+            </div>
             <InputHolder
                 fetchWeatherData={fetchWeatherData}
                 verifiedZip={verifiedZip}
             />
             <div id={'topText'}>
-                {(!validData) && <span>Please Enter a  <span id={'forRealsies'} className={!verifiedZip ? 'invalid' : ''}>for-realsies</span> zip code </span>}
+                {(!validData) && <span>Please enter a <span id={'forRealsies'} className={!verifiedZip ? 'invalid' : ''}>for-realsies</span> zip code </span>}
                 {validData && weatherData.name}
             </div>
             <div id={'desc'} className={'flexRow centeredChildren'}>{weatherDescription}</div>
