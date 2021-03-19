@@ -33,13 +33,13 @@ function App() {
     let currentTempInt = null, highTempInt = null, lowTempInt = null, iconURL = null;
     if (validData) {
         [weatherDescription, lowTempInt, currentTempInt, highTempInt] = [weatherData.weather[0].description, parseInt(weatherData.main.temp_min), parseInt(weatherData.main.temp), parseInt(weatherData.main.temp_max),];
-        console.log(weatherData.weather[0].icon);
         iconURL = 'http://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png';
     }
     return (
         <div id={'weatherApp'}>
+            {iconURL && <img id={'weatherIcon'} src={iconURL} alt={'icon displaying ' + weatherDescription}/>}
             <div id={'weatherHeader'} className={'flexColumn centeredChildren'}>
-                <div>Weather {iconURL && <img src={iconURL} alt={'icon displaying ' + weatherDescription}/>} </div>
+                <div>Weather Getter</div>
                 <div id={'headerSubtitle'}>no matter the weather we'll weather together {'<3'}</div>
             </div>
             <InputHolder

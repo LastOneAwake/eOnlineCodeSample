@@ -45,14 +45,24 @@ $lightBorderColor: rgba(255, 255, 255, 0.56);
   box-sizing: border-box;
   animation: bgCycle 20s ease-in-out infinite;
 
+  #weatherIcon{
+    display:none;
+    @media screen and (max-width: 1100px){
+      display: block;
+    }
+    border-bottom-left-radius:50%;
+    position:absolute;
+    top: 0;
+    right: 0;
+    height:5em;
+    background-color: rgba(255, 255, 255, 0.2);
+    animation: fadeIn 2s;
+  }
   #weatherHeader {
     font-family: 'Roboto', sans-serif;
     font-size: 3em;
     padding: .25em;
     color: $lightText;
-    img{
-      height: 1em;
-    }
     #headerSubtitle{
       text-align: center;
       font-size: .5em;
@@ -217,6 +227,15 @@ $lightBorderColor: rgba(255, 255, 255, 0.56);
   }
   100% {
     background-position: 0 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity:0;
+  }
+  to{
+    opacity:1;
   }
 }
 
