@@ -20,9 +20,14 @@ function App() {
             })
         ;
     }
-    let topText = 'Please Enter a for-realsies zip code', weatherDescription = '\u00A0', currentTempInt = '', highTempInt = '', lowTempInt = '';
+
+    //locally used text variables, using \u00A0 for &nbsp; so as to take up the space w/out having to fill it with something.
+    let topText = 'Please Enter a for-realsies zip code', weatherDescription = '\u00A0';
+    //temp vals passed to the Temperatures component
+    let currentTempInt = '', highTempInt = '', lowTempInt = '';
+    //a valid zip is our validator, this is because the api will let us know if the zip is valid and if so we'll have all the data available
     if (validZip) {
-        [topText, weatherDescription, lowTempInt, currentTempInt, highTempInt] = [weatherData.name, weatherData.weather[0].description, parseInt(weatherData.main.temp_min), parseInt(weatherData.main.temp), parseInt(weatherData.main.temp_max), ];
+        [topText, weatherDescription, lowTempInt, currentTempInt, highTempInt] = [weatherData.name, weatherData.weather[0].description, parseInt(weatherData.main.temp_min), parseInt(weatherData.main.temp), parseInt(weatherData.main.temp_max),];
     }
     return (
         <div id={'weatherApp'}>
