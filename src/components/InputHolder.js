@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
 /**
  *
  */
 export default function InputHolder({fetchWeatherData, validZip}) {
     const [inputValue, updateInputValue] = useState('');
+    const inputRef = useRef(null);
+    useEffect(() => {
+        inputRef.current.focus();
+    }, []);
 
     function onSubmit(e) {
         e.preventDefault();
@@ -29,6 +33,7 @@ export default function InputHolder({fetchWeatherData, validZip}) {
                         name={'zipInput'}
                         type={'text'}
                         value={inputValue}
+                        ref={inputRef}
                         onChange={e => {
                             let val = e.target.value;
                             if (val.length > 5) {
